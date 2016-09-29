@@ -42,13 +42,16 @@ std::string getHash(const std::string& word) {
 // 2. Every i/I replaces with 1
 //Example : dictionary -> d1ct1onary
 std::string letterToNum(std::string word) {
-    for (unsigned int i = 0; i<word.length(); i++) {
-        if ((word[i] == 'i') || (word[i] == 'I'))
+    int i = 0;
+    for (char letter : word) {
+        if ((letter == 'i') || (letter == 'I'))
             word[i] = '1';
 
-        if ((word[i] == 'e') || (word[i] == 'E'))
+        if ((letter == 'e') || (letter == 'E'))
             word[i] = '3';
+        i++;
     }
+
     return word;
 }
 
@@ -58,13 +61,12 @@ std::string letterToNum(std::string word) {
 //Example : Dictionary -> dICTIONARY
 std::string letterChange(std::string word) {
     using namespace std;
-    for (unsigned int i = 0; i<word.length(); i++) {
-        if (isalpha(word[i])) {
-            char wordChar = word[i];
-            word[i] = toupper(word[i]);
-            if (word[i] == wordChar)
-                word[i] = tolower(word[i]);
-        }
+    int i = 0;
+    for (char letter : word) {
+        word[i] = toupper(letter);
+        if (word[i] == letter)
+            word[i] = tolower(word[i]);
+        i++;
     }
     return word;
 }
@@ -104,12 +106,21 @@ std::string attack(const std::string& hash, std::vector<std::string>& dictionary
     }
 
     for (std::string entry : dictionary) {
-        if ((getHash(entry) == hash)
-            || (getHash(letterToNum(entry)) == hash)
-            || (getHash(letterChange(entry)) == hash)
-            || (getHash(addUnderscore(entry)) == hash)
-            || (getHash(replaceA(entry)) == hash))
+
+        if (getHash(entry) == hash)
             return entry;
+
+        if (getHash(letterToNum(entry)) == hash)
+            return letterToNum(entry);
+
+        if (getHash(letterChange(entry)) == hash)
+            return letterChange(entry);
+
+        if (getHash(addUnderscore(entry)) == hash)
+            return addUnderscore(entry);
+
+        if (getHash(replaceA(entry)) == hash)
+            return replaceA(entry);
     }
     return "";
 }
