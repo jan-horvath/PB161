@@ -6,7 +6,7 @@
 #include <cassert>
 
 
-bool Zoo::addPerson(const Person person) {
+bool Zoo::addPerson(const Person &person) {
     for (const Person &adopter : adopters) {
         if (person.equalTo(adopter)) return false;
     }
@@ -14,7 +14,7 @@ bool Zoo::addPerson(const Person person) {
     return true;
 }
 
-bool Zoo::addAnimal(const Animal animal) {
+bool Zoo::addAnimal(const Animal &animal) {
     for (const Animal &zooAnimal : animals) {
         if (zooAnimal.equalTo(animal)) return false;
     }
@@ -50,7 +50,7 @@ const Animal &Zoo::findAnimal(const std::string name) const {
     assert(false);
 }
 
-bool Zoo::adopt(const Adoption adoption) {
+bool Zoo::adopt(const Adoption &adoption) {
     for (const Adoption &existingAdoption : adoptions) {
         if (adoption.equalTo(existingAdoption)) return false;
     }
@@ -58,19 +58,19 @@ bool Zoo::adopt(const Adoption adoption) {
     return true;
 }
 
-const std::vector<Person> &Zoo::getPeople() {
+const std::vector<Person> &Zoo::getPeople() const {
     return adopters;
 }
 
-const std::vector<Animal> &Zoo::getAnimals() {
+const std::vector<Animal> &Zoo::getAnimals() const {
     return animals;
 }
 
-const std::vector<Adoption> &Zoo::getAdoptions() {
+const std::vector<Adoption> &Zoo::getAdoptions() const {
     return adoptions;
 }
 
-std::vector<Person> Zoo::getAdoptersForPlaque(Animal animal) {
+std::vector<Person> Zoo::getAdoptersForPlaque(const Animal &animal) const {
     std::vector<Person> adoptersForPlaque;
 
     for (const Adoption &adoption : adoptions) {

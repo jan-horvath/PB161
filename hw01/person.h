@@ -15,13 +15,14 @@ public:
     const std::string email; //ID
     const std::string city;
 
-    Person(std::string name, std::string email, std::string city) : name(name), email(email), city(city) {}
+    Person(const std::string name, const std::string email, const std::string city) : name(name), email(email),
+                                                                                      city(city) {}
 
-    bool equalId(std::string email) const {
+    bool equalId(const std::string email) const {
         return email == this->email;
     }
 
-    bool equalTo(Person person) const {
+    bool equalTo(const Person &person) const {
         return this->equalId(person.email);
     }
 

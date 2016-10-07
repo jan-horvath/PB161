@@ -10,27 +10,27 @@
 
 class Animal {
 public:
-    const std::string name; //ID
-    const std::string description;
+	const std::string name; //ID
+	const std::string description;
 
-    Animal(std::string name, std::string description) : name(name), description(description) {}
+	Animal(const std::string name, const std::string description) : name(name), description(description) {}
 
-    bool equalId(std::string name) const {
-        return this->name == name;
-    }
+	bool equalId(const std::string name) const {
+		return this->name == name;
+	}
 
-    bool equalTo(Animal animal) const {
-        return (this->equalId(animal.name));
-    }
+	bool equalTo(const Animal &animal) const {
+		return (this->equalId(animal.name));
+	}
 
-    bool hasDescription() const {
-        return description != "";
-    }
+	bool hasDescription() const {
+		return description != "";
+	}
 
-    void print() const {
-        std::cout << name << std::endl;
-        if (hasDescription()) std::cout << description << std::endl;
-    }
+	void print() const {
+		std::cout << name << std::endl;
+		if (hasDescription()) std::cout << description << std::endl;
+	}
 };
 
 

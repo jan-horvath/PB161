@@ -15,10 +15,10 @@ public:
     const Animal animal;
     const unsigned int amount;
 
-    Adoption(Person adopter, Animal animal, const unsigned int amount) : adopter(adopter), animal(animal),
-                                                                         amount(amount) {}
+    Adoption(const Person &adopter, const Animal &animal, const unsigned int amount) : adopter(adopter), animal(animal),
+                                                                                       amount(amount) {}
 
-    bool equalTo(Adoption adoption) const {
+    bool equalTo(const Adoption &adoption) const {
         return ((this->adopter.equalTo(adoption.adopter))
                 && (this->animal.equalTo(adoption.animal)));
     }

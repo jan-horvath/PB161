@@ -12,9 +12,9 @@
 
 class Zoo {
 public:
-    bool addPerson(const Person person);
+    bool addPerson(const Person &person);
 
-    bool addAnimal(const Animal animal);
+    bool addAnimal(const Animal &animal);
 
     bool hasPerson(const std::string email) const;
 
@@ -24,15 +24,15 @@ public:
 
     const Animal &findAnimal(const std::string name) const;
 
-    bool adopt(const Adoption adoption);
+    bool adopt(const Adoption &adoption);
 
-    const std::vector<Person> &getPeople();
+    const std::vector<Person> &getPeople() const;
 
-    const std::vector<Animal> &getAnimals();
+    const std::vector<Animal> &getAnimals() const;
 
-    const std::vector<Adoption> &getAdoptions();
+    const std::vector<Adoption> &getAdoptions() const;
 
-    std::vector<Person> getAdoptersForPlaque(Animal animal);
+    std::vector<Person> getAdoptersForPlaque(const Animal &animal) const;
 
 private:
     std::vector<Animal> animals;

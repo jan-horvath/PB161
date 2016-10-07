@@ -96,11 +96,12 @@ void Handler::handle() {
                 cout << "Existing person's email:" << endl;
                 getline(cin, email);
                 if (email == "") {
-                    cerr << "Email cannot be blank!";
+                    cerr << "Email cannot be blank!" << endl;
                     break;
                 }
                 if (!zoo.hasPerson(email)) {
                     cerr << "Person does not exist!" << endl;
+                    break;
                 }
 
                 cout << "Animal's name:" << endl;
@@ -120,7 +121,7 @@ void Handler::handle() {
 
                 Person person = zoo.findPerson(email);
                 Animal animal = zoo.findAnimal(name);
-                if (zoo.adopt(Adoption(person, animal, amount))) {
+                if (!zoo.adopt(Adoption(person, animal, amount))) {
                     cerr << "Animal already adopted by this person!";
                     break;
                 }
