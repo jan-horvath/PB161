@@ -7,8 +7,7 @@
 
 class Handler {
 public:
-    void handle();
+	void handle();
 };
-
 
 #endif //HW01_HANDLER_H

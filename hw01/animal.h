@@ -15,7 +15,7 @@ public:
 
 	Animal(const std::string name, const std::string description) : name(name), description(description) {}
 
-	bool equalId(const std::string name) const {
+	bool equalId(const std::string &name) const {
 		return this->name == name;
 	}
 
@@ -29,7 +29,8 @@ public:
 
 	void print() const {
 		std::cout << name << std::endl;
-		if (hasDescription()) std::cout << description << std::endl;
+		if (hasDescription()) 
+			std::cout << description << std::endl;
 	}
 };
 
