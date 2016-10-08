@@ -16,7 +16,7 @@ public:
 	const std::string city;
 
 	Person(const std::string name, const std::string email, const std::string city) : name(name), email(email),
-																					  city(city) {}
+	                                                                                  city(city) {}
 
 	bool equalId(const std::string &email) const {
 		return email == this->email;
@@ -32,7 +32,7 @@ public:
 
 	void print() const {
 		std::cout << this->name + " <" + this->email + ">";
-		if (hasCity()) 
+		if (hasCity())
 			std::cout << ", " << this->city;
 		std::cout << std::endl;
 	}

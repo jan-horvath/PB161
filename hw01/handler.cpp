@@ -10,7 +10,7 @@
 void Handler::handle() {
 	char choice = '9';
 	std::string input;
-	
+
 	using namespace std;
 	Zoo zoo;
 

@@ -19,7 +19,7 @@ public:
 
 	bool equalTo(const Adoption &adoption) const {
 		return ((this->adopter.equalTo(adoption.adopter))
-			&& (this->animal.equalTo(adoption.animal)));
+		    && (this->animal.equalTo(adoption.animal)));
 	}
 
 	void print() const {
