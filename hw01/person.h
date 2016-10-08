@@ -32,7 +32,8 @@ public:
 
 	void print() const {
 		std::cout << this->name + " <" + this->email + ">";
-		if (hasCity()) std::cout << ", " << this->city;
+		if (hasCity()) 
+			std::cout << ", " << this->city;
 		std::cout << std::endl;
 	}
 };

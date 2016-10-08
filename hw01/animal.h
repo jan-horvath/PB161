@@ -5,8 +5,8 @@
 #ifndef HW01_ANIMAL_H
 #define HW01_ANIMAL_H
 
-#include <string>
 #include <iostream>
+#include <string>
 
 class Animal {
 public:
@@ -29,7 +29,7 @@ public:
 
 	void print() const {
 		std::cout << name << std::endl;
-		if (hasDescription()) 
+		if (hasDescription())
 			std::cout << description << std::endl;
 	}
 };
