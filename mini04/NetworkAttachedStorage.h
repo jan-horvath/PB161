@@ -18,7 +18,7 @@ private:
 
 public:
   NetworkAttachedStorage()
-      : m_diskDrives(10, DiskDrive()), m_memory(), m_processor(),
+      : m_diskDrives(10), m_memory(), m_processor(),
         m_brand("GenericNAS") {
     using namespace std;
     cout << "NetworkAttachedStorage #" << m_label.id << " \"GenericNAS\""
@@ -48,7 +48,7 @@ public:
   }
 
   ~NetworkAttachedStorage() {
-    std::cout << "NetworkAttachedStorage #" << m_label.id << std::endl;
+    std::cout << "~NetworkAttachedStorage #" << m_label.id << std::endl;
   }
 
   unsigned long id() const { return m_label.id; }
