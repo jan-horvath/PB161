@@ -33,7 +33,8 @@ public:
       : m_root(root_drive), m_home(home_drive), m_graphicsCard(gpu),
         m_memory(memory), m_processor(processor), m_brand(name) {
     using namespace std;
-    cout << "PersonalComputer #" << m_label.id << " \"" << m_brand << "\"" << endl;
+    cout << "PersonalComputer #" << m_label.id << " \"" << m_brand << "\""
+         << endl;
     cout << "    (custom components)" << endl;
   }
 
