@@ -17,7 +17,7 @@ BMPImage::BMPImage(uint16_t width, uint16_t height, const std::string &name)
 }
 
 BMPImage::BMPImage(const BMPImage &other)
-    : m_isGood(true), m_height(other.m_height), m_width(other.m_width) {
+    : m_width(other.m_width), m_height(other.m_height), m_isGood(true) {
   auto pixelsPointer = std::make_unique<Pixel[]>(m_height * m_width);
   std::copy(other.m_pixels.get(),
             other.m_pixels.get() + other.m_width * other.m_height,
