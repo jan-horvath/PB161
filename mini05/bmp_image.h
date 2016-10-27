@@ -1,6 +1,6 @@
 #include "bmp/bmp.h"
-#include <bits/unique_ptr.h>
 #include <cstdint>
+#include <memory>
 #include <string>
 #include <vector>
 
