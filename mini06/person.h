@@ -30,12 +30,22 @@ public:
 		return city != "";
 	}
 
-	void print() const {
-		std::cout << this->name + " <" + this->email + ">";
-		if (hasCity())
-			std::cout << ", " << this->city;
-		std::cout << std::endl;
+	friend std::ostream &operator<<(std::ostream &os, const Person &person) {
+		os << person.name + " <" + person.email + ">";
+		if (person.hasCity()) {
+			os << ", " << person.city;
+		}
+		os << std::endl;
+		return os;
 	}
+
+	/*
+	void print() const {
+		std::cout << name + " <" + email + ">";
+		if (hasCity())
+			std::cout << ", " << city;
+		std::cout << std::endl;
+	}*/
 };
 
 

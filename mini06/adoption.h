@@ -5,6 +5,7 @@
 #ifndef HW01_ADOPTION_H
 #define HW01_ADOPTION_H
 
+#include <ostream>
 #include "animal.h"
 #include "person.h"
 
@@ -23,7 +24,7 @@ public:
 	}
 
 	void print() const {
-		adopter.print();
+		std::cout << adopter;
 		std::cout << animal;
 		std::cout << "Amount: " << amount << std::endl;
 	}

@@ -131,7 +131,7 @@ void Handler::handle() {
 		}
 		case '4': {
 			for (const Person &person : zoo.getPeople()) {
-				person.print();
+				std::cout << person;
 			}
 			cout << "OK" << endl;
 			break;
@@ -166,7 +166,7 @@ void Handler::handle() {
 			Animal animal = zoo.findAnimal(name);
 			cout << animal;
 			for (const Person &person : zoo.getAdoptersForPlaque(animal)) {
-				person.print();
+				std::cout << person;
 			}
 			cout << "OK" << endl;
 			break;
