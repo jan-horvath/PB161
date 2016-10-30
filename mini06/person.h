@@ -17,13 +17,16 @@ public:
 
 	Person(const std::string name, const std::string email, const std::string city) : name(name), email(email),
 	                                                                                  city(city) {}
+	bool operator==(const std::string &rhs) const {
+		return email==rhs;
+	}
 
-	bool equalId(const std::string &email) const {
-		return email == this->email;
+	bool operator!=(const std::string &rhs) const {
+		return !(*this==rhs);
 	}
 
 	bool operator==(const Person &rhs) const {
-		return equalId(rhs.email);
+		return email==rhs.email;
 	}
 
 	bool operator!=(const Person &rhs) const {
@@ -57,6 +60,14 @@ public:
 		std::cout << std::endl;
 	}*/
 };
+
+inline bool operator==(const std::string &lhs, const Person &rhs) {
+	return lhs==rhs.email;
+}
+
+inline bool operator!=(const std::string &lhs, const Person &rhs) {
+	return !(lhs == rhs);
+}
 
 
 #endif //HW01_PERSON_H
