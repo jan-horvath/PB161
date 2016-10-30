@@ -8,7 +8,7 @@
 
 bool Zoo::addPerson(const Person &person) {
 	for (const Person &adopter : adopters) {
-		if (person.equalTo(adopter))
+		if (person==adopter)
 			return false;
 	}
 	adopters.push_back(person);

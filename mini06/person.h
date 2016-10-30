@@ -22,9 +22,21 @@ public:
 		return email == this->email;
 	}
 
+	bool operator==(const Person &rhs) const {
+		return name == rhs.name &&
+		       email == rhs.email &&
+		       city == rhs.city;
+	}
+
+	bool operator!=(const Person &rhs) const {
+		return !(rhs == *this);
+	}
+
+	/*
 	bool equalTo(const Person &person) const {
 		return this->equalId(person.email);
 	}
+	 */
 
 	bool hasCity() const {
 		return city != "";
