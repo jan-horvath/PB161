@@ -19,9 +19,19 @@ public:
 		return this->name == name;
 	}
 
+	bool operator==(const Animal &rhs) const {
+		return name == rhs.name;
+	}
+
+	bool operator!=(const Animal &rhs) const {
+		return !(rhs == *this);
+	}
+
+	/*
 	bool equalTo(const Animal &animal) const {
 		return (this->equalId(animal.name));
 	}
+	 */
 
 	bool hasDescription() const {
 		return description != "";

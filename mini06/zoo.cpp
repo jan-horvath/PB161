@@ -17,7 +17,7 @@ bool Zoo::addPerson(const Person &person) {
 
 bool Zoo::addAnimal(const Animal &animal) {
 	for (const Animal &zooAnimal : animals) {
-		if (zooAnimal.equalTo(animal))
+		if (zooAnimal==animal)
 			return false;
 	}
 	animals.push_back(animal);
@@ -81,7 +81,7 @@ std::vector<Person> Zoo::getAdoptersForPlaque(const Animal &animal) const {
 	std::vector<Person> adoptersForPlaque;
 
 	for (const Adoption &adoption : adoptions) {
-		if (adoption.animal.equalTo(animal))
+		if (adoption.animal==animal)
 			adoptersForPlaque.push_back(adoption.adopter);
 	}
 	return adoptersForPlaque;
