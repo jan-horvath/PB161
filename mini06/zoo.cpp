@@ -34,7 +34,7 @@ bool Zoo::hasPerson(const std::string &email) const {
 
 bool Zoo::hasAnimal(const std::string &name) const {
 	for (const Animal &animal : animals) {
-		if (animal.equalId(name))
+		if (animal==name)
 			return true;
 	}
 	return false;
@@ -50,7 +50,7 @@ const Person &Zoo::findPerson(const std::string &email) const {
 
 const Animal &Zoo::findAnimal(const std::string &name) const {
 	for (const Animal &animal : animals) {
-		if (animal.equalId(name))
+		if (animal==name)
 			return animal;
 	}
 	assert(false);

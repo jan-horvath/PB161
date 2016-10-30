@@ -13,14 +13,18 @@ public:
 	const std::string name; //ID
 	const std::string description;
 
-	Animal(const std::string name, const std::string description) : name(name), description(description) {}
+	Animal(const std::string &name, const std::string &description) : name(name), description(description) {}
 
-	bool equalId(const std::string &name) const {
-		return this->name == name;
+	bool operator==(const std::string &rhs) const {
+		return name==rhs;
+	}
+
+	bool operator!=(const std::string &rhs) const {
+		return !(*this == rhs);
 	}
 
 	bool operator==(const Animal &rhs) const {
-		return equalId(rhs.name);
+		return rhs.name==name;
 	}
 
 	bool operator!=(const Animal &rhs) const {
@@ -53,6 +57,14 @@ public:
 	}
 	 */
 };
+
+inline bool operator==(const std::string &lhs, const Animal &rhs) {
+	return lhs==rhs.name;
+}
+
+inline bool operator!=(const std::string &lhs, const Animal &rhs) {
+	return !(lhs==rhs);
+}
 
 
 #endif //HW01_ANIMAL_H
