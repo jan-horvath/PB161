@@ -58,7 +58,7 @@ const Animal &Zoo::findAnimal(const std::string &name) const {
 
 bool Zoo::adopt(const Adoption &adoption) {
 	for (const Adoption &existingAdoption : adoptions) {
-		if (adoption.equalTo(existingAdoption))
+		if (adoption==existingAdoption)
 			return false;
 	}
 	adoptions.push_back(adoption);
