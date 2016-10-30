@@ -20,7 +20,7 @@ public:
 	}
 
 	bool operator==(const Animal &rhs) const {
-		return name == rhs.name;
+		return equalId(rhs.name);
 	}
 
 	bool operator!=(const Animal &rhs) const {

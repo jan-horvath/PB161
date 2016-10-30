@@ -23,9 +23,7 @@ public:
 	}
 
 	bool operator==(const Person &rhs) const {
-		return name == rhs.name &&
-		       email == rhs.email &&
-		       city == rhs.city;
+		return equalId(rhs.email);
 	}
 
 	bool operator!=(const Person &rhs) const {
