@@ -145,7 +145,7 @@ void Handler::handle() {
 		}
 		case '6': {
 			for (const Adoption &adoption : zoo.getAdoptions()) {
-				adoption.print();
+				cout << adoption;
 			}
 			cout << "OK" << endl;
 			break;

@@ -23,11 +23,19 @@ public:
 		    && (this->animal.equalTo(adoption.animal)));
 	}
 
+	friend std::ostream &operator<<(std::ostream &os, const Adoption &adoption) {
+		os << adoption.adopter << adoption.animal << "Amount: "
+		   << adoption.amount << std::endl;
+		return os;
+	}
+
+	/*
 	void print() const {
 		std::cout << adopter;
 		std::cout << animal;
 		std::cout << "Amount: " << amount << std::endl;
 	}
+	 */
 };
 
 #endif //HW01_ADOPTION_H
