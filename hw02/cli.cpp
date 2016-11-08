@@ -129,9 +129,10 @@ Parser::shortCmdFind(const std::string &substring) {
   return _longMap.end();
 };
 
-void Parser::parse(int argc, const char *const *argv) {
+void Parser::parse(const char *const *argv) {
   // clear();
-  for (; argc; --argc, ++argv) {
+  // for (; argc; --argc, ++argv) {
+  while (*argv != nullptr) {
     bool charCmd = false;
     const char *arg = *argv;
     if (arg[0] == '-') {
@@ -159,12 +160,13 @@ void Parser::parse(int argc, const char *const *argv) {
         std::string argument;
         if (charCmd && std::strlen(argv[0]) > 2) {
           argument = (*argv + 2);
+          ++argv;
         } else {
-          --argc;
+          //--argc;
           ++argv;
           argument = argv[0];
         }
-        assert(argc);
+        // assert(argc);
         switch (opt->parse(argument)) {
         case PO_NoMoreArgumentsExpected:
           return fail(std::string("More than one argument given for ") + arg +
@@ -175,8 +177,10 @@ void Parser::parse(int argc, const char *const *argv) {
         case PO_Success:
           break;
         }
+        argv++;
       } else {
         opt->parse(opt->longName());
+        argv++;
       }
     } else {
       _extra.push_back(arg);
@@ -238,8 +242,8 @@ Parser *FileCommandsParser::parse(int argc, const char *const *argv) {
       _subcommands.find(argv[2]);
   if (cmd == _subcommands.end())
     fail(std::string("Unknown command ") + argv[2]);
-  argc -= 3;
+  // argc -= 3;
   argv += 3;
-  cmd->second->parse(argc, argv);
+  cmd->second->parse(argv);
   return cmd->second.get();
 }

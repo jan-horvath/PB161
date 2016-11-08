@@ -72,10 +72,11 @@ int img(int argc, const char *const *argv) {
   if (found == nullptr) {
     return 4;
   }
-  if (!found->extra().empty()) {
-    found->dump();
-    die("Unknown command");
-  }
+  /*
+if (!found->extra().empty()) {
+  found->dump();
+  die("Unknown command");
+}*/
   // assert(found->extra().empty());
   // found->dump();
 
@@ -113,7 +114,8 @@ int img(int argc, const char *const *argv) {
       if (op_bottom->hasValue())
         bottom = op_bottom->getInt();
       Pixel fill;
-      parseColor(op_color->getString(), fill);
+      if (op_color->hasValue())
+        parseColor(op_color->getString(), fill);
       /*if (!parseColor(op_color->getString(), fill)) {
               std::cerr << "Parse error, expected color, got " <<
       op_color->getString() << std::endl;
@@ -161,8 +163,14 @@ int img(int argc, const char *const *argv) {
         std::cerr << "Unknow command" << std::endl;
         return 1;
       }
+      for (;; argv++) {
+        if (*argv == *found->getExtra().begin())
+          break;
+      }
       found =
           found2->second.get(); // point to the next requested parser (command)
+      argv++;
+      found->parse(argv);
     }
   }
 

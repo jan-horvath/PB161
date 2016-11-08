@@ -113,7 +113,7 @@ struct Parser {
   void clear();
   void help(std::ostream &os = std::cout) const;
 
-  void parse(int argc, const char *const *argv);
+  void parse(const char *const *argv);
 
   std::map<std::string, Option *>::iterator
   shortCmdFind(const std::string &substring);
