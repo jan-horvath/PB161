@@ -14,7 +14,6 @@ struct Pixel {
 // Represents image which is a 2D matrix of Pixels
 // **existing interface should not be broken**
 struct Image {
-  ~Image();
   Image() : _width(0), _height(0) {}
   Image(size_t width, size_t height);
   Image(const Image&);

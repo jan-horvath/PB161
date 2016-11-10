@@ -224,7 +224,6 @@ Parser* FileCommandsParser::parse(int argc, const char* const* argv) {
       _subcommands.find(argv[2]);
   if (cmd == _subcommands.end())
     fail(std::string("Unknown command ") + argv[2]);
-  // argc -= 3;
   argv += 3;
   cmd->second->parse(argv);
   return cmd->second.get();
