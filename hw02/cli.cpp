@@ -56,44 +56,26 @@ Option* Parser::add(char shortName,
                     const std::string& help,
                     OptionType ty) {
   _options.push_back(std::make_unique<Option>(shortName, longName, help, ty));
-  Option* opt = (*(_options.end() - 1)).get();
+  Option* opt = _options.back().get();
   _shortMap[opt->shortName()] = opt;
   _longMap[opt->longName()] = opt;
   return opt;
 }
 
-/*
-Parser::~Parser() {
-        for (std::vector<Option *>::iterator it = _options.begin();
-             it != _options.end(); ++it)
-                delete *it;
-}*/
-
 void Parser::clear() {
   for (std::unique_ptr<Option>& option : _options) {
     option->clear();
   }
-  /*
-for (std::vector<Option *>::iterator it = _options.begin();
-     it != _options.end(); ++it)
-        (*it)->clear();*/
 }
 
 void Parser::dump() const {
   for (const std::unique_ptr<Option>& option : _options) {
     option->dump();
   }
-  /*
-for (std::vector<Option *>::const_iterator it = _options.begin();
-     it != _options.end(); ++it)
-        (*it)->dump();
- */
   std::cout << std::endl << "extras: ";
   for (const std::string& extra : _extra) {
     std::cout << extra << ", ";
   }
-  /*std::copy(_extra.begin(), _extra.end(),
-    std::ostream_iterator<const char *>(std::cout, ", "));*/
   std::cout << std::endl;
 }
 
@@ -141,8 +123,6 @@ std::map<std::string, Option*>::iterator Parser::shortCmdFind(
 };
 
 void Parser::parse(const char* const* argv) {
-  // clear();
-  // for (; argc; --argc, ++argv) {
   while (*argv != nullptr) {
     bool charCmd = false;
     const char* arg = *argv;
@@ -169,18 +149,15 @@ void Parser::parse(const char* const* argv) {
       // parse value
       if (opt->needsParameter()) {
         std::string argument;
-        if (*(argv + 1) == nullptr) {
-          die("Missing parameter!");
-        }
+
         if (charCmd && std::strlen(argv[0]) > 2) {
           argument = (*argv + 2);
-          //++argv;
+        } else if (*(argv + 1) == nullptr) {
+          die("Missing parameter!");
         } else {
-          //--argc;
           ++argv;
           argument = argv[0];
         }
-        // assert(argc);
         switch (opt->parse(argument)) {
           case PO_NoMoreArgumentsExpected:
             return fail(std::string("More than one argument given for ") + arg +
@@ -220,22 +197,11 @@ void FileCommandsParser::help(std::ostream& os) const {
     pair.second->help(os);
     os << std::endl;
   }
-  /*
-for (std::map<std::string, std::unique_ptr<Parser>>::iterator it =
-_subcommands.begin();
-     it != _subcommands.end(); ++it) {
-        os << it->first << ":" << std::endl;
-        it->second->help(os);
-        os << std::endl;
-}
- */
 }
 
 static bool fileExists(const std::string& file) {
   std::fstream checkFile(file);
   return checkFile.good();
-  // std::fstream *fs = new std::fstream(file.c_str());
-  // return fs->good();
 }
 
 Parser* FileCommandsParser::parse(int argc, const char* const* argv) {

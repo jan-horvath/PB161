@@ -73,13 +73,6 @@ int img(int argc, const char* const* argv) {
   if (found == nullptr) {
     return 4;
   }
-  /*
-if (!found->extra().empty()) {
-found->dump();
-die("Unknown command");
-}*/
-  // assert(found->extra().empty());
-  // found->dump();
 
   Image img = decodePNG(fcp.inputFile());
 
@@ -121,11 +114,6 @@ die("Unknown command");
       Pixel fill;
       if (op_color->hasValue())
         parseColor(op_color->getString(), fill);
-      /*if (!parseColor(op_color->getString(), fill)) {
-        std::cerr << "Parse error, expected color, got " <<
-op_color->getString() << std::endl;
-        return 1;
-}*/
       if ((top < 0) || (bottom < 0) || (right < 0) || (left < 0))
         die("Negative input for padding");
       img = pad(img, top, left, bottom, right, fill);
@@ -157,7 +145,6 @@ op_color->getString() << std::endl;
       return 1;
     }
 
-    // auto some = found->extra().at(0);
     if (found->extra().empty())
       found = nullptr;  // if there are no more commands
     else {
@@ -169,7 +156,7 @@ op_color->getString() << std::endl;
         return 1;
       }
       for (;; argv++) {
-        if (*argv == *found->getExtra().begin())
+        if (*argv == found->getExtra().front())
           break;
       }
       found =
@@ -188,16 +175,3 @@ op_color->getString() << std::endl;
   std::cerr << "An error occurred, not writting" << std::endl;
   return 3;
 }
-
-// check cli classes fcp -> parser -> Option -> OptionVal
-// check compatibility
-// check image
-// check tools
-
-/*
- * each class:
- * check const in attributes
- * check const after functions
- * check const in return type
- * check const in function operands
-*/

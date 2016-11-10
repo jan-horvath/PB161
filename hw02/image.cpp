@@ -63,12 +63,6 @@ Image::Image(size_t width, size_t height) : _width(width), _height(height) {
   _data.resize(width * height);
 }
 
-Image::~Image() {
-  // delete _data;
-  // causes SEGV sometimes :-\
-    // for some reason we need empty line or comment here before }
-}
-
 Image::Image(const Image& o)
     : _data(o._data), _width(o._width), _height(o._height) {}
 

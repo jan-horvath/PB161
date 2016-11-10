@@ -23,7 +23,6 @@ enum Accumulate { A_KeepFirst, A_KeepLast, A_AssertSingle };
 // Holds value of parameter but contains no parsing functionality
 struct OptionVal {
   OptionVal() : _stringValue(""), _intValue(0), recivedEmptyString(false) {}
-  //~OptionVal() {}
 
   void set(const std::string& val);
   void set(intmax_t val);
@@ -68,7 +67,6 @@ enum ParseOutcome { PO_Success, PO_InvalidFormat, PO_NoMoreArgumentsExpected };
 // parsed value
 // **interface should respect requirements given in the assignment**
 struct Option {
-  // ADD ACCUMULATE
   Option(char shortName,
          const std::string& longName,
          const std::string& help,
@@ -142,7 +140,6 @@ struct Parser {
 
 // parser of commandline with subnocommands (represented by Parser)
 struct FileCommandsParser {
-  // TODO: Return NULL when subcommand already present
   Parser* add(const std::string& name) {
     if (_subcommands.find(name) != _subcommands.end())
       return nullptr;
