@@ -22,7 +22,7 @@ enum Accumulate { A_KeepFirst, A_KeepLast, A_AssertSingle };
 
 // Holds value of parameter but contains no parsing functionality
 struct OptionVal {
-  OptionVal() : _stringValue(""), _intValue(0) {}
+  OptionVal() : _stringValue(""), _intValue(0), recivedEmptyString(false) {}
   //~OptionVal() {}
 
   void set(const std::string& val);
@@ -31,26 +31,32 @@ struct OptionVal {
   void clear() {
     _intValue = 0;
     _stringValue = "";
+    recivedEmptyString = false;
   }
 
   bool valid() const {
-    assert(_intValue == 0 || _stringValue.empty());
-    return !_stringValue.empty() || _intValue != 0;
+    assert((_stringValue.empty() && _intValue == 0) ||
+           (_intValue == 0 && !recivedEmptyString) ||
+           (!recivedEmptyString &&
+            _stringValue.empty()));  // at least two of them are not defined
+    return !_stringValue.empty() || _intValue != 0 || recivedEmptyString;
   }
 
   intmax_t getInt() const {
-    assert(_intValue);
+    assert(_intValue != 0);
     return _intValue;
   }
 
   const std::string& getString() const {
-    assert(!_stringValue.empty());
+    assert((recivedEmptyString && _stringValue.empty()) ||
+           (!recivedEmptyString && !_stringValue.empty()));
     return _stringValue;
   }
 
  private:
   std::string _stringValue;
   intmax_t _intValue;
+  bool recivedEmptyString;
 };
 
 // result of parse in option
@@ -105,8 +111,6 @@ struct Option {
 // basic parser of commandline options
 // **interface should respect requirements given in the assignment**
 struct Parser {
-  //~Parser();
-
   Option* add(char shortName,
               const std::string& longName,
               const std::string& help,

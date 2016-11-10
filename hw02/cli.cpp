@@ -6,6 +6,8 @@
 
 void OptionVal::set(const std::string& val) {
   assert(!_intValue);
+  if (val.empty())
+    recivedEmptyString = true;
   _stringValue = val;
 }
 
@@ -172,7 +174,7 @@ void Parser::parse(const char* const* argv) {
         }
         if (charCmd && std::strlen(argv[0]) > 2) {
           argument = (*argv + 2);
-          ++argv;
+          //++argv;
         } else {
           //--argc;
           ++argv;
