@@ -14,17 +14,16 @@ struct Pixel {
 // Represents image which is a 2D matrix of Pixels
 // **existing interface should not be broken**
 struct Image {
-
   ~Image();
   Image() : _width(0), _height(0) {}
   Image(size_t width, size_t height);
-  Image(const Image &);
-  Image &operator=(const Image &);
+  Image(const Image&);
+  Image& operator=(const Image&);
 
   // this is only for debugging image transformations
-  void dump(std::ostream & = std::cerr) const;
+  void dump(std::ostream& = std::cerr) const;
 
-  Pixel &pixel(size_t x, size_t y) { return _data.at(y * _width + x); }
+  Pixel& pixel(size_t x, size_t y) { return _data.at(y * _width + x); }
 
   Pixel pixel(size_t x, size_t y) const { return _data.at(y * _width + x); }
 
@@ -36,12 +35,12 @@ struct Image {
   unsigned width() const { return _width; }
   unsigned height() const { return _height; }
 
-private:
+ private:
   std::vector<Pixel> _data;
   size_t _width, _height;
 };
 
-const Image decodePNG(const std::string &filename);
-bool encodePNG(const std::string &filename, const Image &img);
+const Image decodePNG(const std::string& filename);
+bool encodePNG(const std::string& filename, const Image& img);
 
-#endif // IMAGE_HPP
+#endif  // IMAGE_HPP

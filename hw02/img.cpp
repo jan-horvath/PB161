@@ -5,7 +5,7 @@
 // parse color from string, in form of r,g,b or r,g,b,a where all of r,g,b,a
 // are numbers from 0 to 255 in decadic, ocatal (with leading 0) or hexadecimal
 // (with leading 0x form)
-bool parseColor(std::string color, Pixel &px) {
+bool parseColor(std::string color, Pixel& px) {
   int red, green, blue, alpha;
   std::string::size_type next = 0;
   try {
@@ -15,14 +15,14 @@ bool parseColor(std::string color, Pixel &px) {
     next = color.find(',', next) + 1;
     blue = std::stoi(color.c_str() + next, nullptr, 0);
     next = color.find(',', next) + 1;
-  } catch (const std::exception &e) {
+  } catch (const std::exception& e) {
     die("Invalid color input!");
   }
 
   if (next == std::string::npos + 1)
     alpha = 255;
   else
-    alpha = std::stoi(color.c_str() + next);
+    alpha = std::stoi(color.c_str() + next, nullptr, 0);
   if ((red > 255) || (green > 255) || (blue > 255) || (alpha > 255) ||
       (red < 0) || (green < 0) || (blue < 0) || (alpha < 0)) {
     die("Invalid color/alpha options.");
@@ -36,13 +36,14 @@ bool parseColor(std::string color, Pixel &px) {
 
 // entry point of the program
 // **function header should not be modified**
-int img(int argc, const char *const *argv) {
+int img(int argc, const char* const* argv) {
   FileCommandsParser fcp;
   Parser *s_grayscale = fcp.add("grayscale"), *s_cut = fcp.add("cut"),
          *s_pad = fcp.add("pad"), *s_rotate = fcp.add("rotate");
 
-  Option *og_channels = s_grayscale->add(
-      'c', "channels", "Which channels to use for grayscale computation (use "
+  Option* og_channels =
+      s_grayscale->add('c', "channels",
+                       "Which channels to use for grayscale computation (use "
                        "'r', 'g', or 'b' for each channel, more letters mean "
                        "average of given channels, e.g. rg is average of red "
                        "and green)");
@@ -68,14 +69,14 @@ int img(int argc, const char *const *argv) {
   or_left->setNeedsParameter(false);
   or_right->setNeedsParameter(false);
 
-  Parser *found = fcp.parse(argc - 1, argv + 1);
+  Parser* found = fcp.parse(argc - 1, argv + 1);
   if (found == nullptr) {
     return 4;
   }
   /*
 if (!found->extra().empty()) {
-  found->dump();
-  die("Unknown command");
+found->dump();
+die("Unknown command");
 }*/
   // assert(found->extra().empty());
   // found->dump();
@@ -84,7 +85,11 @@ if (!found->extra().empty()) {
 
   while (found != nullptr) {
     if (found == s_grayscale) {
-      img = grayscale(img, og_channels->getString());
+      if (!og_channels->hasValue()) {
+        img = grayscale(img, "rgb");
+      } else {
+        img = grayscale(img, og_channels->getString());
+      }
     } else if (found == s_cut) {
       int x = 0;
       int y = 0;
@@ -117,10 +122,10 @@ if (!found->extra().empty()) {
       if (op_color->hasValue())
         parseColor(op_color->getString(), fill);
       /*if (!parseColor(op_color->getString(), fill)) {
-              std::cerr << "Parse error, expected color, got " <<
-      op_color->getString() << std::endl;
-              return 1;
-      }*/
+        std::cerr << "Parse error, expected color, got " <<
+op_color->getString() << std::endl;
+        return 1;
+}*/
       if ((top < 0) || (bottom < 0) || (right < 0) || (left < 0))
         die("Negative input for padding");
       img = pad(img, top, left, bottom, right, fill);
@@ -131,13 +136,13 @@ if (!found->extra().empty()) {
           1) {
         die("Multiple directions entered! Only one expected!");
       }
-      if (or_direction->getString() == std::string("left"))
-        d = Direction::D_Left;
-      else if (or_direction->getString() == std::string("right"))
-        d = Direction::D_Right;
-      else if (or_left->hasValue())
+      if (or_left->hasValue())
         d = Direction::D_Left;
       else if (or_right->hasValue())
+        d = Direction::D_Right;
+      else if (or_direction->getString() == std::string("left"))
+        d = Direction::D_Left;
+      else if (or_direction->getString() == std::string("right"))
         d = Direction::D_Right;
       else {
         std::cerr << "Parse error in option --direction, expected 'left' or "
@@ -154,12 +159,12 @@ if (!found->extra().empty()) {
 
     // auto some = found->extra().at(0);
     if (found->extra().empty())
-      found = nullptr; // if there are no more commands
+      found = nullptr;  // if there are no more commands
     else {
       auto found2 = fcp.getSubcommands().find(*(found->extra().begin()));
 
       if (found2 ==
-          fcp.getSubcommands().end()) { // command not found in database
+          fcp.getSubcommands().end()) {  // command not found in database
         std::cerr << "Unknow command" << std::endl;
         return 1;
       }
@@ -168,7 +173,7 @@ if (!found->extra().empty()) {
           break;
       }
       found =
-          found2->second.get(); // point to the next requested parser (command)
+          found2->second.get();  // point to the next requested parser (command)
       argv++;
       found->parse(argv);
     }

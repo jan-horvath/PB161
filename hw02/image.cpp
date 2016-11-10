@@ -2,7 +2,7 @@
 #include <iomanip>
 #include <lodepng.h>
 
-const Image decodePNG(const std::string &filename) {
+const Image decodePNG(const std::string& filename) {
   std::vector<unsigned char> data;
   unsigned width, height;
   unsigned error = lodepng::decode(data, width, height, filename);
@@ -16,7 +16,7 @@ const Image decodePNG(const std::string &filename) {
   std::vector<unsigned char>::iterator it = data.begin();
   for (unsigned j = 0; j < height; ++j) {
     for (unsigned i = 0; i < width; ++i) {
-      Pixel &px = img.pixel(i, j);
+      Pixel& px = img.pixel(i, j);
       px.r = *(it++);
       px.g = *(it++);
       px.b = *(it++);
@@ -27,7 +27,7 @@ const Image decodePNG(const std::string &filename) {
   return img;
 }
 
-bool encodePNG(const std::string &filename, const Image &img) {
+bool encodePNG(const std::string& filename, const Image& img) {
   std::vector<unsigned char> data;
   for (unsigned j = 0; j < img.height(); ++j) {
     for (unsigned i = 0; i < img.width(); ++i) {
@@ -46,13 +46,13 @@ bool encodePNG(const std::string &filename, const Image &img) {
   return !error;
 }
 
-void Image::dump(std::ostream &os) const {
+void Image::dump(std::ostream& os) const {
   os << std::hex << std::setfill('0');
   for (unsigned j = 0; j < _height; ++j) {
     for (unsigned i = 0; i < _width; ++i) {
       Pixel px = pixel(i, j);
-      os << std::setw(2) << +px.r // unary plus here changes char to int
-         << std::setw(2) << +px.g // so it can be printed as number
+      os << std::setw(2) << +px.r  // unary plus here changes char to int
+         << std::setw(2) << +px.g  // so it can be printed as number
          << std::setw(2) << +px.b << std::setw(2) << +px.a << " ";
     }
     os << std::endl;
@@ -69,10 +69,10 @@ Image::~Image() {
     // for some reason we need empty line or comment here before }
 }
 
-Image::Image(const Image &o)
+Image::Image(const Image& o)
     : _data(o._data), _width(o._width), _height(o._height) {}
 
-Image &Image::operator=(const Image &o) {
+Image& Image::operator=(const Image& o) {
   _data.resize(o._height * o._width);
   _data.clear();
   std::copy(o._data.begin(), o._data.end(), std::back_inserter(_data));

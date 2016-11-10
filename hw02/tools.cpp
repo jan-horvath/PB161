@@ -2,7 +2,7 @@
 #include "die.hpp"
 #include <cstdlib>
 
-Image rotate(Image &img, Direction direction) {
+Image rotate(Image& img, Direction direction) {
   Image rotated(img.height(), img.width());
   for (unsigned j = 0; j < rotated.height(); ++j)
     for (unsigned i = 0; i < rotated.width(); ++i)
@@ -13,7 +13,7 @@ Image rotate(Image &img, Direction direction) {
   return rotated;
 }
 
-Image grayscale(Image &img, const std::string &channels) {
+Image grayscale(Image& img, const std::string& channels) {
   if (channels.length() > 3)
     die("too many channels entered");
   std::string nonEmptyChannels = channels;
@@ -50,8 +50,12 @@ Image grayscale(Image &img, const std::string &channels) {
   return img;
 }
 
-Image pad(Image &img, unsigned top, unsigned left, unsigned bottom,
-          unsigned right, Pixel &fill) {
+Image pad(Image& img,
+          unsigned top,
+          unsigned left,
+          unsigned bottom,
+          unsigned right,
+          Pixel& fill) {
   Image padded(img.width() + left + right, img.height() + top + bottom);
   for (unsigned j = 0; j < padded.height(); ++j)
     for (unsigned i = 0; i < padded.width(); ++i)
@@ -63,7 +67,7 @@ Image pad(Image &img, unsigned top, unsigned left, unsigned bottom,
   return padded;
 }
 
-Image cut(Image &img, unsigned x, unsigned y, unsigned width, unsigned height) {
+Image cut(Image& img, unsigned x, unsigned y, unsigned width, unsigned height) {
   if ((x + width) > img.width() || width == 0)
     width = img.width() - x;
   if ((y + height) > img.height() || height == 0)
