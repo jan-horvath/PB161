@@ -114,6 +114,9 @@ int img(int argc, const char* const* argv) {
       Pixel fill;
       if (op_color->hasValue())
         parseColor(op_color->getString(), fill);
+      else {
+        parseColor("255,255,255,255", fill);
+      }
       if ((top < 0) || (bottom < 0) || (right < 0) || (left < 0))
         die("Negative input for padding");
       img = pad(img, top, left, bottom, right, fill);
