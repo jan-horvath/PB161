@@ -16,7 +16,6 @@ struct Pixel {
 struct Image {
   Image() : _width(0), _height(0) {}
   Image(size_t width, size_t height);
-  Image(const Image&);
   Image& operator=(const Image&);
 
   // this is only for debugging image transformations

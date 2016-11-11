@@ -13,7 +13,7 @@ const Image decodePNG(const std::string& filename) {
   }
 
   Image img = Image(width, height);
-  std::vector<unsigned char>::iterator it = data.begin();
+  auto it = data.begin();
   for (unsigned j = 0; j < height; ++j) {
     for (unsigned i = 0; i < width; ++i) {
       Pixel& px = img.pixel(i, j);
@@ -62,9 +62,6 @@ void Image::dump(std::ostream& os) const {
 Image::Image(size_t width, size_t height) : _width(width), _height(height) {
   _data.resize(width * height);
 }
-
-Image::Image(const Image& o)
-    : _data(o._data), _width(o._width), _height(o._height) {}
 
 Image& Image::operator=(const Image& o) {
   _data.resize(o._height * o._width);

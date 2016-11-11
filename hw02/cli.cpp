@@ -108,8 +108,7 @@ std::map<std::string, Option*>::iterator Parser::shortCmdFind(
     const std::string& substring) {
   std::map<std::string, Option*>::iterator found;
   int possibleOptions = 0;
-  for (std::map<std::string, Option*>::iterator it = _longMap.begin();
-       it != _longMap.end(); it++) {
+  for (auto it = _longMap.begin(); it != _longMap.end(); it++) {
     if (it->first.find(substring) == 0) {
       found = it;
       possibleOptions++;
@@ -130,7 +129,7 @@ void Parser::parse(const char* const* argv) {
       // find option
       Option* opt = nullptr;
       if (arg[1] == '-') {
-        std::map<std::string, Option*>::iterator it = _longMap.find(arg + 2);
+        auto it = _longMap.find(arg + 2);
         if (it == _longMap.end()) {  // does not find
           it = shortCmdFind(arg + 2);
           if (it == _longMap.end()) {
@@ -139,7 +138,7 @@ void Parser::parse(const char* const* argv) {
         }
         opt = it->second;
       } else {
-        std::map<char, Option*>::iterator it = _shortMap.find(arg[1]);
+        auto it = _shortMap.find(arg[1]);
         if (it == _shortMap.end())
           return fail(std::string("Unknown short option ") + arg);
         opt = it->second;
@@ -220,8 +219,7 @@ Parser* FileCommandsParser::parse(int argc, const char* const* argv) {
       return nullptr;
   }
 
-  std::map<const std::string, std::unique_ptr<Parser> >::iterator cmd =
-      _subcommands.find(argv[2]);
+  auto cmd = _subcommands.find(argv[2]);
   if (cmd == _subcommands.end())
     fail(std::string("Unknown command ") + argv[2]);
   argv += 3;
