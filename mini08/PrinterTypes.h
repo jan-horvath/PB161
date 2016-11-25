@@ -14,11 +14,11 @@ class DotMatrix : public Printer {
   DotMatrix(unsigned resource, const std::string& serial)
       : m_resource(resource), m_serial(serial), m_pageCounter(0) {}
 
-  virtual const std::string& getSerial() const override;
+  const std::string& getSerial() const override;
 
-  virtual unsigned int print(const PrintJob& job) override;
+  unsigned int print(const PrintJob& job) override;
 
-  virtual unsigned int pageCounter() const override;
+  unsigned int pageCounter() const override;
 };
 
 class InkJet : public Printer {
@@ -35,11 +35,11 @@ class InkJet : public Printer {
         m_serial(serial),
         m_pageCounter(0) {}
 
-  virtual const std::string& getSerial() const override;
+  const std::string& getSerial() const override;
 
-  virtual unsigned int print(const PrintJob& job) override;
+  unsigned int print(const PrintJob& job) override;
 
-  virtual unsigned int pageCounter() const override;
+  unsigned int pageCounter() const override;
 };
 
 class Laser : public Printer {
@@ -52,10 +52,10 @@ class Laser : public Printer {
   Laser(unsigned resource, const std::string& serial)
       : m_resource(resource), m_serial(serial), m_pageCounter(0) {}
 
-  virtual const std::string& getSerial() const override;
+  const std::string& getSerial() const override;
 
-  virtual unsigned int print(const PrintJob& job) override;
+  unsigned int print(const PrintJob& job) override;
 
-  virtual unsigned int pageCounter() const override;
+  unsigned int pageCounter() const override;
 };
 #endif  // PRINTER_TYPES_H
