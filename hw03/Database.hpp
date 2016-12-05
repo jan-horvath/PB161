@@ -10,27 +10,28 @@
 #include <memory>
 
 class Database {
-private:
-    std::vector<std::unique_ptr<Invoice>> m_invoices;
-    std::vector<std::unique_ptr<Subject>> m_subjects;
-public:
-    bool addInvoice(const Invoice &invoice);
+ private:
+  std::vector<std::unique_ptr<Invoice>> m_invoices;
+  std::vector<std::unique_ptr<Subject>> m_subjects;
 
-    Invoice const * getInvoice(unsigned id) const;
+ public:
+  bool addInvoice(const Invoice& invoice);
 
-    bool addSubject(const Subject &subject);
+  Invoice const* getInvoice(unsigned id) const;
 
-    Subject const * getSubject(unsigned id) const;
+  bool addSubject(const Subject& subject);
 
-    bool updateSubject(const Subject &subject);
+  Subject const* getSubject(unsigned id) const;
 
-    std::vector<Invoice const*> getInvoicesByCustomer(unsigned int customerId);
+  bool updateSubject(const Subject& subject);
 
-    std::vector<Invoice const*> getInvoicesBySupplier(unsigned int supplierId);
+  std::vector<Invoice const*> getInvoicesByCustomer(unsigned int customerId);
 
-    bool containsSubject(unsigned id);
+  std::vector<Invoice const*> getInvoicesBySupplier(unsigned int supplierId);
 
-    bool containsInvoice(unsigned id);
+  bool containsSubject(unsigned id);
+
+  bool containsInvoice(unsigned id);
 };
 
-#endif //HW03_ACCOUNTING_DATABASE_HPP
+#endif  // HW03_ACCOUNTING_DATABASE_HPP

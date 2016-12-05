@@ -9,35 +9,43 @@
 #include "Database.hpp"
 
 class SubjectFacade : public SubjectsFacadeInterface {
-private:
-    Database &database;
-    unsigned int counter;
-    bool updateSuccessful;
-public:
-    virtual ~SubjectFacade() override = default;
+ private:
+  Database& database;
+  unsigned int counter;
+  bool updateSuccessful;
 
-    SubjectFacade(Database &database) : database(database), counter(0), updateSuccessful(false) {}
+ public:
+  ~SubjectFacade() override = default;
 
-    virtual unsigned int
-    createSubject(std::string name, std::string registrationId, std::string vatId, std::string address,
-                  std::string bankAccount) override;
+  SubjectFacade(Database& database)
+      : database(database), counter(0), updateSuccessful(false) {}
 
-    virtual void updateSubject(unsigned subjectId, std::string name, std::string registrationId, std::string vatId,
-                               std::string address, std::string bankAccount) override;
+  unsigned int createSubject(std::string name,
+                             std::string registrationId,
+                             std::string vatId,
+                             std::string address,
+                             std::string bankAccount) override;
 
-    virtual std::string getSubjectName(unsigned subjectId) const override;
+  void updateSubject(unsigned subjectId,
+                     std::string name,
+                     std::string registrationId,
+                     std::string vatId,
+                     std::string address,
+                     std::string bankAccount) override;
 
-    virtual std::string getSubjectRegistrationId(unsigned subjectId) const override;
+  std::string getSubjectName(unsigned subjectId) const override;
 
-    virtual std::string getSubjectVatId(unsigned subjectId) const override;
+  std::string getSubjectRegistrationId(unsigned subjectId) const override;
 
-    virtual std::string getSubjectAddress(unsigned subjectId) const override;
+  std::string getSubjectVatId(unsigned subjectId) const override;
 
-    virtual std::string getSubjectBankAccount(unsigned subjectId) const override;
+  std::string getSubjectAddress(unsigned subjectId) const override;
 
-    virtual bool isUpdateSuccessful() const override;
+  std::string getSubjectBankAccount(unsigned subjectId) const override;
 
-    virtual bool containsSubject(unsigned id) const override;
+  bool isUpdateSuccessful() const override;
+
+  bool containsSubject(unsigned id) const override;
 };
 
-#endif //HW03_ACCOUNTING_SUBJECTFACADE_HPP
+#endif  // HW03_ACCOUNTING_SUBJECTFACADE_HPP
