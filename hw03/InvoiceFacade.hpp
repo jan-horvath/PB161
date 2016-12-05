@@ -9,7 +9,7 @@ private:
     Database &database;
     unsigned int counter;
 public:
-    InvoiceFacade(Database &database) : database(database) {}
+    InvoiceFacade(Database &database) : database(database), counter(0) {}
 
     virtual unsigned int
     createInvoice(unsigned supplierId, unsigned customerId, unsigned variableSymbol, unsigned constantSymbol,
