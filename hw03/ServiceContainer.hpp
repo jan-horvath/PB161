@@ -30,7 +30,7 @@ class ServiceContainer : public ServiceContainerInterface {
 
   InvoiceFacadeInterface& getInvoiceFacade() override { return *invoiceFacade; }
 
-  virtual SubjectsFacadeInterface& getSubjectsFacade() override {
+  SubjectsFacadeInterface& getSubjectsFacade() override {
     return *subjectFacade;
   }
 };
