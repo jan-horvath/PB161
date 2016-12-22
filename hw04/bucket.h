@@ -6,6 +6,7 @@
 #define HW04_BUCKET_H
 
 #include <memory>
+#include <stdexcept>
 
 enum State { empty, zombie, occupied };
 
