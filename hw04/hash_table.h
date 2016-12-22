@@ -33,6 +33,7 @@ struct HashTableEntry {
   };
   bool isEmpty() const { return (entryValue.empty()); }
   bool isZombie() const { return entryValue.zombie(); }
+  bool isOccupied() const { return entryValue.occupied(); }
   const Key& getEntryKey() const { return entryKey; }
 };
 
@@ -238,8 +239,8 @@ struct HashTable {
     }
     std::vector<HashTableEntry<Key, Value>> rehashedEntries(count);
     for (unsigned i = 0; i < this->count();
-         ++i) {                        // go through all old entries
-      if (!entries.at(i).isEmpty()) {  // if contains any value, rehash it
+         ++i) {                          // go through all old entries
+      if (entries.at(i).isOccupied()) {  // if contains any value, rehash it
         unsigned newEntryPosition =
             keyHasher(entries.at(i).getEntryKey()) % count;
         // this position may be taken, so we need to find nearest empty slot
