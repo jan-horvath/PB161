@@ -56,13 +56,13 @@ struct HashTable {
   HashTableEntry<Key, Value>* searchKeyInTable(unsigned& from, const Key& key) {
     unsigned begin = from;
     unsigned position = from;
-    while (position != entries.size() && !entries.at(position).isEmpty()) {
+    while (position != count() && !entries.at(position).isEmpty()) {
       from = position;
       if (keyComparator(entries.at(position).getEntryKey(), key))
         return &(entries.at(position));
       position++;
     }
-    if (position == entries.size()) {  // reached the end of array
+    if (position == count()) {  // reached the end of array
       position = 0;
       while (position != begin && !entries.at(position).isEmpty()) {
         from = position;
@@ -86,13 +86,13 @@ struct HashTable {
                                                      const Key& key) const {
     unsigned begin = from;
     unsigned position = from;
-    while (position != entries.size() && !entries.at(position).isEmpty()) {
+    while (position != count() && !entries.at(position).isEmpty()) {
       from = position;
       if (keyComparator(entries.at(position).getEntryKey(), key))
         return &(entries.at(position));
       position++;
     }
-    if (position == entries.size()) {
+    if (position == count()) {
       position = 0;
       while (position != from && !entries.at(position).isEmpty()) {
         from = position;
@@ -160,17 +160,17 @@ struct HashTable {
     other = tmp;
   }
   Value& operator[](const Key& key) {
-    unsigned entryPosition = keyHasher(key) % entries.size();
+    unsigned entryPosition = keyHasher(key) % count();
     HashTableEntry<Key, Value>* entryPtr = searchKeyInTable(entryPosition, key);
     if (entryPtr == nullptr) {
       insert(key, Value());
-      entryPosition = keyHasher(key) % entries.size();
+      entryPosition = keyHasher(key) % count();
       return searchKeyInTable(entryPosition, key)->getEntryValue();
     }
     return entryPtr->getEntryValue();
   };
   Value& at(const Key& key) {
-    unsigned entryPosition = keyHasher(key) % entries.size();
+    unsigned entryPosition = keyHasher(key) % count();
     HashTableEntry<Key, Value>* entryPtr = searchKeyInTable(entryPosition, key);
     if (entryPtr == nullptr) {
       throw std::out_of_range("Key not found in table!");
@@ -179,7 +179,7 @@ struct HashTable {
   }
 
   const Value& at(const Key& key) const {
-    unsigned entryPosition = keyHasher(key) % entries.size();
+    unsigned entryPosition = keyHasher(key) % count();
     const HashTableEntry<Key, Value>* entryPtr =
         searchKeyInTable(entryPosition, key);
     if (entryPtr == nullptr) {
@@ -190,19 +190,19 @@ struct HashTable {
 
   bool insert(const Key& key, const Value& value) {
     if (load_factor() + static_cast<float>(1) / count() > maxLoadFactor)
-      rehash(entries.size() * 2);
-    unsigned entryPosition = keyHasher(key) % entries.size();
+      rehash(count() * 2);
+    unsigned entryPosition = keyHasher(key) % count();
     if (searchKeyInTable(entryPosition, key) == nullptr) {  // key not found
       if (entryPosition != count()) {  // entryPosition = nearest empty slot
         unsigned saveAt =
-            searchForZombies(keyHasher(key) % entries.size(), entryPosition);
+            searchForZombies(keyHasher(key) % count(), entryPosition);
         entries[saveAt] = HashTableEntry<Key, Value>(key, value);
         if (saveAt != entryPosition)
           --zombieCount;
       } else {  // empty slot not found, only zombies and occupied are present
                 // in table
-        entries.at(searchForZombies(keyHasher(key) % entries.size(),
-                                    keyHasher(key) % entries.size() - 1)) =
+        entries.at(searchForZombies(keyHasher(key) % count(),
+                                    keyHasher(key) % count() - 1)) =
             HashTableEntry<Key, Value>(key, value);
         --zombieCount;
       }
@@ -213,14 +213,14 @@ struct HashTable {
   }
 
   bool contains(const Key& key) const {
-    unsigned entryPosition = keyHasher(key) % entries.size();
+    unsigned entryPosition = keyHasher(key) % count();
     return searchKeyInTable(entryPosition, key) != nullptr;
   }
 
   bool remove(const Key& key) {
     if (zombie_factor() > maxZombieFactor)
       rehash();
-    unsigned entryPosition = keyHasher(key) % entries.size();
+    unsigned entryPosition = keyHasher(key) % count();
     if (searchKeyInTable(entryPosition, key) == nullptr)
       return false;
     // entry position is the index where key was found
@@ -237,7 +237,7 @@ struct HashTable {
       return;
     }
     std::vector<HashTableEntry<Key, Value>> rehashedEntries(count);
-    for (unsigned i = 0; i < entries.size();
+    for (unsigned i = 0; i < this->count();
          ++i) {                        // go through all old entries
       if (!entries.at(i).isEmpty()) {  // if contains any value, rehash it
         unsigned newEntryPosition =
@@ -254,7 +254,7 @@ struct HashTable {
     zombieCount = 0;
   }
 
-  void rehash() { rehash(entries.size()); }
+  void rehash() { rehash(count()); }
 
   size_t count() const { return entries.size(); }
 
@@ -263,7 +263,7 @@ struct HashTable {
   bool empty() const { return entriesCount == 0; }
 
   float load_factor() const {
-    return static_cast<float>(entriesCount) / entries.size();
+    return static_cast<float>(entriesCount) / count();
   }
 
   float max_load_factor() const { return maxLoadFactor; }
@@ -276,7 +276,7 @@ struct HashTable {
   }
 
   float zombie_factor() const {
-    return static_cast<float>(zombieCount) / entries.size();
+    return static_cast<float>(zombieCount) / count();
   }
 
   float max_zombie_factor() const { return maxZombieFactor; }
