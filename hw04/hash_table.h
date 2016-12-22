@@ -140,8 +140,8 @@ struct HashTable {
       : entries(5),
         entriesCount(0),
         zombieCount(0),
-        maxLoadFactor(0.666),
-        maxZombieFactor(0.25),
+        maxLoadFactor(static_cast<float>(2) / 3),
+        maxZombieFactor(static_cast<float>(1) / 4),
         keyHasher(),
         keyComparator() {}
 
@@ -153,17 +153,6 @@ struct HashTable {
         maxZombieFactor(other.maxZombieFactor),
         keyHasher(),
         keyComparator() {}
-
-  /*
-  HashTable& operator=(const HashTable &other) {
-      maxZombieFactor = other.maxZombieFactor;
-      maxLoadFactor = other.maxLoadFactor;
-      loadFactor = other.loadFactor;
-      zombieFactor = other.zombieFactor;
-      entries = other.entries;
-      return *this;
-  }
-  */
 
   void swap(HashTable& other) {
     auto tmp = *this;
@@ -219,9 +208,8 @@ struct HashTable {
       }
       ++entriesCount;
       return true;
-    } else {  // key found
-      return false;
-    }
+    }  // key found
+    return false;
   }
 
   bool contains(const Key& key) const {
